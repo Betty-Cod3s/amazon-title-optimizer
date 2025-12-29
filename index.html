@@ -158,6 +158,65 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
+    
+    /* Expandable title row */
+    .title-row {
+      cursor: pointer;
+    }
+    .title-row:hover .expand-icon {
+      color: #FF9900;
+    }
+    .title-expanded {
+      background: rgba(255, 153, 0, 0.05);
+    }
+    .title-full {
+      display: none;
+      padding: 12px;
+      background: #0f172a;
+      border-radius: 8px;
+      margin-top: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+    .title-expanded .title-full {
+      display: block;
+    }
+    
+    /* Editable title */
+    .title-editable {
+      background: #1e293b;
+      border: 1px solid #475569;
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      width: 100%;
+      min-height: 60px;
+      resize: vertical;
+    }
+    .title-editable:focus {
+      outline: none;
+      border-color: #FF9900;
+      box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
+    }
+    .char-counter {
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .char-counter.over-limit {
+      color: #ef4444;
+      font-weight: 600;
+    }
+    .char-counter.near-limit {
+      color: #f59e0b;
+    }
+    .char-counter.good {
+      color: #22c55e;
+    }
   </style>
 </head>
 <body class="text-slate-200 antialiased">
@@ -172,7 +231,7 @@
         </div>
         <div>
           <h1 class="text-xl font-semibold text-white">Amazon Title Optimizer</h1>
-          <p class="text-xs text-slate-400">Bulk listing title generation • v1.1</p>
+          <p class="text-xs text-slate-400">Bulk listing title generation • v1.2</p>
         </div>
       </div>
       <div class="flex items-center gap-4">
@@ -545,21 +604,42 @@
             </div>
           </div>
           
-          <!-- Subject Matter Example -->
+          <!-- Subject Matter Example - Now shows per strategy -->
           <div class="bg-slate-700/30 rounded-lg p-4 border border-cyan-500/30">
             <div class="flex items-center gap-2 mb-3">
               <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
               </svg>
-              <span class="text-cyan-400 text-xs font-medium">Generated Subject Matter Fields</span>
+              <span class="text-cyan-400 text-xs font-medium">Subject Matter Fields (Strategy-Specific)</span>
             </div>
-            <p class="text-xs text-slate-400 mb-2">Auto-generated for faster indexing (20 min vs 24 hrs):</p>
-            <div class="grid gap-2">
-              <div class="bg-slate-900/50 rounded px-3 py-2 text-sm"><span class="text-slate-500 mr-2">1.</span><span class="text-white">Samsung TV Remote Control</span></div>
-              <div class="bg-slate-900/50 rounded px-3 py-2 text-sm"><span class="text-slate-500 mr-2">2.</span><span class="text-white">BN59-01178B Replacement Remote</span></div>
-              <div class="bg-slate-900/50 rounded px-3 py-2 text-sm"><span class="text-slate-500 mr-2">3.</span><span class="text-white">Universal Remote for Samsung UN55F6300</span></div>
-              <div class="bg-slate-900/50 rounded px-3 py-2 text-sm"><span class="text-slate-500 mr-2">4.</span><span class="text-white">OEM Samsung Remote Parts</span></div>
-              <div class="bg-slate-900/50 rounded px-3 py-2 text-sm"><span class="text-slate-500 mr-2">5.</span><span class="text-white">Smart TV Remote Control Accessories</span></div>
+            <p class="text-xs text-slate-400 mb-3">Keywords change based on your selected strategy:</p>
+            
+            <!-- OEM Premium Keywords -->
+            <div class="mb-4">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 text-xs">OEM Premium</span>
+              </div>
+              <div class="grid gap-1 text-xs">
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">1.</span> <span class="text-white">Samsung <span class="text-purple-300">Original OEM</span> Remote Control</span></div>
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">2.</span> <span class="text-white">BN59-01178B <span class="text-purple-300">Genuine</span> Replacement</span></div>
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">3.</span> <span class="text-white"><span class="text-purple-300">Official</span> Samsung TV Remote</span></div>
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">4.</span> <span class="text-white"><span class="text-purple-300">Brand New OEM</span> Remote Parts</span></div>
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">5.</span> <span class="text-white"><span class="text-purple-300">Genuine</span> Samsung UN55F6300 Accessories</span></div>
+              </div>
+            </div>
+            
+            <!-- Universal Budget Keywords -->
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="px-2 py-0.5 rounded bg-green-500/20 text-green-300 text-xs">Universal Budget</span>
+              </div>
+              <div class="grid gap-1 text-xs">
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">1.</span> <span class="text-white"><span class="text-green-300">Universal</span> Remote for Samsung TV</span></div>
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">2.</span> <span class="text-white">BN59-01178B <span class="text-green-300">Universal Replacement</span></span></div>
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">3.</span> <span class="text-white"><span class="text-green-300">Generic</span> TV Remote Control</span></div>
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">4.</span> <span class="text-white"><span class="text-green-300">Compatible</span> Samsung Remote</span></div>
+                <div class="bg-slate-900/50 rounded px-2 py-1"><span class="text-slate-500">5.</span> <span class="text-white"><span class="text-green-300">Multi-Brand Universal</span> Remote</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -574,7 +654,7 @@
   <!-- Footer -->
   <footer class="border-t border-slate-700/50 mt-12">
     <div class="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between text-sm text-slate-500">
-      <p>Amazon Title Optimizer v1.1</p>
+      <p>Amazon Title Optimizer v1.2</p>
       <p>Client-side processing • Your data never leaves your browser</p>
     </div>
   </footer>
@@ -644,26 +724,34 @@ const templates = {
   }
 };
 
-// Subject matter generator (remote control specific - CEYBO format)
-function generateSubjectMatter(data) {
+// Subject matter generator (strategy-specific keywords)
+function generateSubjectMatter(data, strategy) {
   const subjects = [];
   
-  // 1. [Brand] TV Remote Control
-  if (data.brand) subjects.push(`${data.brand} TV Remote Control`);
-  
-  // 2. [Part Number] Replacement Remote
-  if (data.partNumber) subjects.push(`${data.partNumber} Replacement Remote`);
-  
-  // 3. Universal Remote for [Brand] [Model]
-  let universal = `Universal Remote for ${data.brand || 'TV'}`;
-  if (data.model) universal += ` ${data.model}`;
-  subjects.push(universal);
-  
-  // 4. OEM [Brand] Remote Parts
-  if (data.brand) subjects.push(`OEM ${data.brand} Remote Parts`);
-  
-  // 5. Smart TV Remote Control Accessories
-  subjects.push('Smart TV Remote Control Accessories');
+  if (strategy === 'oem_premium') {
+    // OEM Premium: Original, OEM, Genuine, Brand New
+    if (data.brand) subjects.push(`${data.brand} Original OEM Remote Control`);
+    if (data.partNumber) subjects.push(`${data.partNumber} Genuine Replacement`);
+    if (data.brand) subjects.push(`Official ${data.brand} TV Remote`);
+    subjects.push('Brand New OEM Remote Parts');
+    if (data.brand && data.model) subjects.push(`Genuine ${data.brand} ${data.model} Accessories`);
+  } else if (strategy === 'universal_budget') {
+    // Universal Budget: Universal, Replacement, Compatible, Generic
+    if (data.brand) subjects.push(`Universal Remote for ${data.brand} TV`);
+    if (data.partNumber) subjects.push(`${data.partNumber} Universal Replacement`);
+    subjects.push('Generic TV Remote Control');
+    if (data.brand) subjects.push(`Compatible ${data.brand} Remote`);
+    subjects.push('Multi-Brand Universal Remote');
+  } else {
+    // Compatible Mid-Range: Mix of both
+    if (data.brand) subjects.push(`${data.brand} TV Remote Control`);
+    if (data.partNumber) subjects.push(`${data.partNumber} Replacement Remote`);
+    let universal = `Universal Remote for ${data.brand || 'TV'}`;
+    if (data.model) universal += ` ${data.model}`;
+    subjects.push(universal);
+    if (data.brand) subjects.push(`Compatible ${data.brand} Remote Parts`);
+    subjects.push('Smart TV Remote Control Accessories');
+  }
   
   return subjects.slice(0, 5);
 }
@@ -859,7 +947,7 @@ async function processData() {
     // Generate subject matter if enabled
     let subjectMatter = [];
     if (options.generateSubjectMatter) {
-      subjectMatter = generateSubjectMatter(data);
+      subjectMatter = generateSubjectMatter(data, strategy);
     }
     
     // Build result row
@@ -973,19 +1061,47 @@ function renderPreview() {
     
     const charDisplay = typeof charCount === 'number' ? getCharCountDisplay(charCount) : { text: charCount, class: 'text-slate-400' };
     
+    // Determine char counter class for editing
+    let charClass = 'good';
+    if (charCount > 200) charClass = 'over-limit';
+    else if (charCount > 180) charClass = 'near-limit';
+    
     return `
-      <tr class="hover:bg-slate-700/30">
+      <tr class="hover:bg-slate-700/30 title-row" data-row-idx="${idx}">
         <td class="p-3 font-mono text-xs text-slate-300">${escapeHtml(sku)}</td>
         <td class="p-3 font-mono text-xs text-amazon-orange">${escapeHtml(partNumber)}</td>
         <td class="p-3 text-slate-300">${escapeHtml(brand)}</td>
         <td class="p-3 text-slate-200 max-w-md">
-          <div class="truncate" title="${escapeHtml(title)}">
-            ${escapeHtml(displayTitle)}${mobileIndicator}
+          <div class="flex items-start gap-2">
+            <div class="flex-1">
+              <div class="truncate title-preview" title="Click para ver/editar título completo">
+                ${escapeHtml(displayTitle)}${mobileIndicator}
+              </div>
+              ${showMobile && title.length > 150 ? `<div class="text-xs text-slate-500 mt-1">Mobile shows first 150 of ${title.length} chars</div>` : ''}
+            </div>
+            ${state.showOptimized && title !== '—' ? `
+              <button class="expand-icon text-slate-500 hover:text-amazon-orange transition-colors flex-shrink-0" title="Ver título completo">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </button>
+            ` : ''}
           </div>
-          ${showMobile && title.length > 150 ? `<div class="text-xs text-slate-500 mt-1">Mobile shows first 150 of ${title.length} chars</div>` : ''}
+          <!-- Expanded view with editable textarea -->
+          <div class="title-full">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs text-slate-400">Título completo (editable):</span>
+              <button class="collapse-btn text-xs text-slate-400 hover:text-white">✕ Cerrar</button>
+            </div>
+            <textarea class="title-editable" data-row-idx="${idx}">${escapeHtml(title)}</textarea>
+            <div class="char-counter ${charClass}" data-counter-idx="${idx}">
+              <span class="char-count">${charCount}</span>/200 caracteres
+              ${charCount > 200 ? ' — ❌ Excede límite de Amazon' : charCount > 180 ? ' — ⚠️ Cerca del límite' : ' — ✅ OK'}
+            </div>
+          </div>
         </td>
-        <td class="p-3 font-mono text-xs ${charDisplay.class}">${charDisplay.text}</td>
-        <td class="p-3 text-center">${status}</td>
+        <td class="p-3 font-mono text-xs ${charDisplay.class}" data-char-cell="${idx}">${charDisplay.text}</td>
+        <td class="p-3 text-center" data-status-cell="${idx}">${status}</td>
         <td class="p-3">
           ${state.showOptimized && title !== '—' ? `
             <button class="copy-btn text-slate-400 hover:text-amazon-orange transition-colors" data-title="${escapeHtml(title)}" title="Copy title">
@@ -999,9 +1115,109 @@ function renderPreview() {
     `;
   }).join('');
   
+  // Add expand/collapse event listeners
+  document.querySelectorAll('.title-row').forEach(row => {
+    const expandBtn = row.querySelector('.expand-icon');
+    const collapseBtn = row.querySelector('.collapse-btn');
+    const titleCell = row.querySelector('td:nth-child(4)');
+    
+    if (expandBtn) {
+      expandBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        row.classList.toggle('title-expanded');
+        // Rotate icon
+        expandBtn.style.transform = row.classList.contains('title-expanded') ? 'rotate(180deg)' : '';
+      });
+    }
+    
+    if (collapseBtn) {
+      collapseBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        row.classList.remove('title-expanded');
+        if (expandBtn) expandBtn.style.transform = '';
+      });
+    }
+    
+    // Click on title preview to expand
+    const titlePreview = row.querySelector('.title-preview');
+    if (titlePreview) {
+      titlePreview.addEventListener('click', (e) => {
+        e.stopPropagation();
+        row.classList.toggle('title-expanded');
+        if (expandBtn) expandBtn.style.transform = row.classList.contains('title-expanded') ? 'rotate(180deg)' : '';
+      });
+    }
+  });
+  
+  // Add editable textarea listeners
+  document.querySelectorAll('.title-editable').forEach(textarea => {
+    textarea.addEventListener('input', (e) => {
+      const idx = parseInt(textarea.dataset.rowIdx);
+      const newTitle = textarea.value;
+      const newCount = newTitle.length;
+      
+      // Update the processed data
+      if (state.processedData && state.processedData[idx]) {
+        state.processedData[idx]['Optimized Title'] = newTitle;
+        state.processedData[idx]['Char Count'] = newCount;
+        
+        // Update status
+        let newStatus = '✅';
+        if (newCount > 200) newStatus = '❌';
+        else if (newCount > 180 || newCount < 60) newStatus = '⚠️';
+        state.processedData[idx]['Status'] = newStatus;
+        
+        // Update UI elements
+        const charCounter = document.querySelector(`[data-counter-idx="${idx}"]`);
+        const charCell = document.querySelector(`[data-char-cell="${idx}"]`);
+        const statusCell = document.querySelector(`[data-status-cell="${idx}"]`);
+        const copyBtn = document.querySelector(`.copy-btn[data-title]`);
+        
+        if (charCounter) {
+          charCounter.className = 'char-counter ' + (newCount > 200 ? 'over-limit' : newCount > 180 ? 'near-limit' : 'good');
+          charCounter.innerHTML = `<span class="char-count">${newCount}</span>/200 caracteres ${newCount > 200 ? ' — ❌ Excede límite de Amazon' : newCount > 180 ? ' — ⚠️ Cerca del límite' : ' — ✅ OK'}`;
+        }
+        
+        if (charCell) {
+          const charDisplay = getCharCountDisplay(newCount);
+          charCell.textContent = charDisplay.text;
+          charCell.className = `p-3 font-mono text-xs ${charDisplay.class}`;
+        }
+        
+        if (statusCell) {
+          statusCell.textContent = newStatus;
+        }
+        
+        // Update copy button with new title
+        const row = textarea.closest('tr');
+        const rowCopyBtn = row.querySelector('.copy-btn');
+        if (rowCopyBtn) {
+          rowCopyBtn.dataset.title = newTitle;
+        }
+        
+        // Update preview text
+        const titlePreview = row.querySelector('.title-preview');
+        if (titlePreview) {
+          const showMobile = state.showMobilePreview;
+          let displayText = newTitle;
+          if (showMobile && newTitle.length > 150) {
+            displayText = newTitle.substring(0, 150);
+            titlePreview.innerHTML = escapeHtml(displayText) + '<span class="text-yellow-400 font-bold">|</span><span class="text-slate-500">...</span>';
+          } else {
+            titlePreview.textContent = newTitle;
+          }
+        }
+      }
+    });
+    
+    // Prevent row click when editing
+    textarea.addEventListener('click', (e) => e.stopPropagation());
+  });
+  
   // Add copy button event listeners
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
       const title = btn.dataset.title;
       await copyToClipboard(title);
       btn.classList.add('copied');
@@ -1070,6 +1286,10 @@ function resetFile() {
   state.columnMapping = {};
   state.processedData = null;
   state.showOptimized = false;
+  
+  // CRITICAL: Reset file input value to allow re-uploading
+  const fileInput = document.getElementById('fileInput');
+  if (fileInput) fileInput.value = '';
   
   document.getElementById('dropZone').classList.remove('has-file');
   document.getElementById('uploadPrompt').classList.remove('hidden');
